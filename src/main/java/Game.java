@@ -3,7 +3,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Game{
-    private int playerCardX = 200, playerCardY = 200;
+    private int playerCardY = 300;
     private List<Card> cards = new ArrayList<>();
     private List<Card> player = new ArrayList<>();
     private int random;
@@ -18,7 +18,13 @@ public class Game{
             cards.add(new Card(spade, symbols[i]));
             cards.add(new Card(club, symbols[i]));
         }
-        update();
+        init();
+    }
+
+    public void init(){
+        for(int i = 0; i < 2; i++){
+            player.add(drawCard());
+        }
     }
 
     public void update(){
@@ -30,13 +36,14 @@ public class Game{
 
     public void draw(Graphics2D g2d){
         for(int i = 0; i < player.size(); i++){
-            player.get(i).draw(g2d, playerCardX, playerCardY);
+            player.get(i).draw(g2d, i*100 + 15, playerCardY);
         }
     }
 
-    public void drawCard(){
+    public Card drawCard(){
         random = (int) (Math.random()*cards.size());
-        player.add(cards.get(random));
+        Card temp = cards.get(random);
         cards.remove(random);
+        return temp;
     }
 }
