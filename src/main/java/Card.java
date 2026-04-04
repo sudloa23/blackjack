@@ -11,7 +11,7 @@ public class Card {
     public Card(String suit, String symbol){
         this.suit = suit;
         this.symbol = symbol;
-        if(suit == "\u2665" || suit == "\u2666"){
+        if(suit.equals("\u2665") || suit.equals("\u2666")){
             color = Color.RED;
         }else{
             color = Color.BLACK;
