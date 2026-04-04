@@ -1,4 +1,5 @@
 import java.awt.*;
+import java.awt.event.MouseEvent;
 import java.awt.geom.AffineTransform;
 import java.util.ArrayList;
 import java.util.List;
@@ -68,6 +69,10 @@ public class Game{
                 }
             }
         }
+
+    }
+
+    public void handleMouseClick(MouseEvent e){
 
     }
 }
