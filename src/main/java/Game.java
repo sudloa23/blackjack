@@ -27,13 +27,6 @@ public class Game{
         }
     }
 
-    public void update(){
-        if(draw){
-            drawCard();
-            draw = false;
-        }
-    }
-
     public void draw(Graphics2D g2d){
         for(int i = 0; i < player.size(); i++){
             player.get(i).draw(g2d, i*100 + 15, playerCardY);
