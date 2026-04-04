@@ -16,6 +16,8 @@ public class Game{
     private int width = 80, height = 140, arcSize = 14;
     private String filledBox = "\u25A3", emptyBox = "\u25A2";
     private int boxSize = 10;
+    private List<Button> buttons = new ArrayList<>();
+    private String[] btnText = {"hit", "stay", "double", "split"};
 
     public Game(){
         for(int i = 0; i < symbols.length; i++){
@@ -32,11 +34,19 @@ public class Game{
             player.add(drawCard());
             bot.add(drawCard());
         }
+
+        for(int i = 1; i <= 4; i++){
+            buttons.add(new Button(350, (i*55)+100, btnText[i-1], i));
+        }
     }
 
     public void draw(Graphics2D g2d){
         for(int i = 0; i < player.size(); i++){
             player.get(i).draw(g2d, i*100 + 15, playerCardY);
+        }
+
+        for(int i = 0; i < buttons.size(); i++){
+            buttons.get(i).draw(g2d);
         }
 
         drawBack(g2d,210, 100);
@@ -73,6 +83,8 @@ public class Game{
     }
 
     public void handleMouseClick(MouseEvent e){
-
+        for(int i = 0; i < buttons.size(); i++){
+            buttons.get(i).pressed(e);
+        }
     }
 }
