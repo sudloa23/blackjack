@@ -83,8 +83,37 @@ public class Game{
     }
 
     public void handleMouseClick(MouseEvent e){
+        int btnPressed = 0;
+
         for(int i = 0; i < buttons.size(); i++){
-            buttons.get(i).pressed(e);
+            if(buttons.get(i).pressed(e)){
+                btnPressed = buttons.get(i).getId();
+            }
+        }
+
+        switch(btnPressed){
+            case 1:
+                System.out.println("hit!");
+
+                break;
+
+            case 2:
+                System.out.println("stay!");
+
+                break;
+
+            case 3:
+                System.out.println("double!");
+
+                break;
+
+            case 4:
+                System.out.println("split!");
+                //implent later
+                break;
+            default:
+                System.out.println("invalid btnId parsed");
+                break;
         }
     }
 }

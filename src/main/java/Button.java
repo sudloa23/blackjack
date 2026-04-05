@@ -15,16 +15,19 @@ public class Button{
         height = 50;
     }
 
-    public int pressed(MouseEvent e){
+    public boolean pressed(MouseEvent e){
         if(e.getX() > x && e.getX() < x+width && e.getY() > y && e.getY() < y+height){
-            System.out.println(text + "!");
-            return id;
+            return true;
         }
-        return 0;
+        return false;
     }
 
     public void draw(Graphics2D g2d){
         g2d.drawRect(x,y,width,height);
         g2d.drawString(text, x+35 - text.length(), y+30);
+    }
+
+    public int getId(){
+        return id;
     }
 }
