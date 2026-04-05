@@ -94,7 +94,9 @@ public class Game{
         switch(btnPressed){
             case 1:
                 System.out.println("hit!");
-
+                int random = (int) (Math.random()*cards.size());
+                player.add(cards.get(random));
+                cards.remove(random);
                 break;
 
             case 2:
