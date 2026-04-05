@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Game{
-    private int playerCardY = 300;
+    private final int playerCardY = 300;
     private List<Card> cards = new ArrayList<>();
     private List<Card> player = new ArrayList<>();
     private List<Card> bot = new ArrayList<>();
@@ -18,6 +18,7 @@ public class Game{
     private int boxSize = 10;
     private List<Button> buttons = new ArrayList<>();
     private String[] btnText = {"hit", "stay", "double", "split"};
+    private int playerPoints = 0, botPoints = 0;
 
     public Game(){
         for(int i = 0; i < symbols.length; i++){
@@ -32,8 +33,13 @@ public class Game{
     public void init(){
         for(int i = 0; i < 2; i++){
             player.add(drawCard());
+            playerPoints += player.get(i).getValue();
             bot.add(drawCard());
+            botPoints += bot.get(i).getValue();
         }
+
+        System.out.println("player Points: " + playerPoints);
+        System.out.println("bot Points: " + botPoints);
 
         for(int i = 1; i <= 4; i++){
             buttons.add(new Button(350, ((i-1)*55) +10, btnText[i-1], i));
@@ -48,6 +54,8 @@ public class Game{
         for(int i = 0; i < buttons.size(); i++){
             buttons.get(i).draw(g2d);
         }
+
+
 
         drawBack(g2d,0, 0);
     }
@@ -96,7 +104,9 @@ public class Game{
                 System.out.println("hit!");
                 int random = (int) (Math.random()*cards.size());
                 player.add(cards.get(random));
+                playerPoints += cards.get(random).getValue();
                 cards.remove(random);
+                System.out.println("player Points updated to: " + playerPoints);
                 break;
 
             case 2:

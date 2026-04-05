@@ -107,4 +107,8 @@ public class Card {
                 g2d.setColor(Color.BLACK);
     }
 
+    public int getValue(){
+        return value;
+    }
+
 }

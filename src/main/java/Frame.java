@@ -3,7 +3,7 @@ import javax.swing.*;
 public class Frame extends JFrame{
     private PaintArea paintArea;
     private String title = "BlackJack";
-    private int width = 500, height = 500;
+    private int width = 800, height = 500;
 
     public Frame(PaintArea paintArea){
         this.paintArea = paintArea;
