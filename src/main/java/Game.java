@@ -36,7 +36,7 @@ public class Game{
         }
 
         for(int i = 1; i <= 4; i++){
-            buttons.add(new Button(350, (i*55)+100, btnText[i-1], i));
+            buttons.add(new Button(350, ((i-1)*55) +10, btnText[i-1], i));
         }
     }
 
@@ -49,7 +49,7 @@ public class Game{
             buttons.get(i).draw(g2d);
         }
 
-        drawBack(g2d,210, 100);
+        drawBack(g2d,0, 0);
     }
 
     public Card drawCard(){

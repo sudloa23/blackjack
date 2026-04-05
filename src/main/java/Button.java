@@ -17,7 +17,7 @@ public class Button{
 
     public int pressed(MouseEvent e){
         if(e.getX() > x && e.getX() < x+width && e.getY() > y && e.getY() < y+height){
-            System.out.println("Button " + id + " - " + text + " got pressed");
+            System.out.println(text + "!");
             return id;
         }
         return 0;
@@ -25,7 +25,6 @@ public class Button{
 
     public void draw(Graphics2D g2d){
         g2d.drawRect(x,y,width,height);
-        g2d.drawString(text, x+35, y+25);
+        g2d.drawString(text, x+35 - text.length(), y+30);
     }
-
 }
