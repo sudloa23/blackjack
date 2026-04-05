@@ -42,7 +42,7 @@ public class Game{
         System.out.println("bot Points: " + botPoints);
 
         for(int i = 1; i <= 4; i++){
-            buttons.add(new Button(350, ((i-1)*55) +10, btnText[i-1], i));
+            buttons.add(new Button(650, ((i-1)*55) +10, btnText[i-1], i));
         }
     }
 
@@ -101,12 +101,16 @@ public class Game{
 
         switch(btnPressed){
             case 1:
-                System.out.println("hit!");
-                int random = (int) (Math.random()*cards.size());
-                player.add(cards.get(random));
-                playerPoints += cards.get(random).getValue();
-                cards.remove(random);
-                System.out.println("player Points updated to: " + playerPoints);
+                if(playerPoints <= 21){
+                    System.out.println("hit!");
+                    int random = (int) (Math.random()*cards.size());
+                    player.add(cards.get(random));
+                    playerPoints += cards.get(random).getValue();
+                    cards.remove(random);
+                    System.out.println("player Points updated to: " + playerPoints);
+                }else{
+                    System.out.println("player already over 21");
+                }
                 break;
 
             case 2:
