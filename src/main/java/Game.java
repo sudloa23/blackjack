@@ -8,9 +8,8 @@ public class Game{
     private final int playerCardY = 300;
     private List<Card> cards = new ArrayList<>();
     private List<Card> player = new ArrayList<>();
-    private List<Card> bot = new ArrayList<>();
+    private List<Card> dealer = new ArrayList<>();
     private int random;
-    private boolean draw = true;
     private String[] symbols = {"A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"};
     private String heart = "\u2665", diamond = "\u2666", spade = "\u2660", club = "\u2663";
     private int width = 80, height = 140, arcSize = 14;
@@ -34,8 +33,8 @@ public class Game{
         for(int i = 0; i < 2; i++){
             player.add(drawCard());
             playerPoints += player.get(i).getValue();
-            bot.add(drawCard());
-            botPoints += bot.get(i).getValue();
+            dealer.add(drawCard());
+            botPoints += dealer.get(i).getValue();
         }
 
         System.out.println("player Points: " + playerPoints);
@@ -131,5 +130,9 @@ public class Game{
                 System.out.println("invalid btnId parsed");
                 break;
         }
+    }
+
+    public void dealerPlay(){
+
     }
 }
