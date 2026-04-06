@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Game{
-    private final int playerCardY = 300;
+    private final int playerCardY = 300, dealerCardY = 15;
     private List<Card> cards = new ArrayList<>();
     private List<Card> player = new ArrayList<>();
     private List<Card> dealer = new ArrayList<>();
@@ -19,6 +19,8 @@ public class Game{
     private String[] btnText = {"hit", "stay", "double", "split"};
     private int playerPoints = 0, dealerPoints = 0;
     private String turn = "p1";
+    private boolean playerStay = false, dealerStay = false;
+    private String winner;
 
     public Game(){
         for(int i = 0; i < symbols.length; i++){
@@ -51,13 +53,15 @@ public class Game{
             player.get(i).draw(g2d, i*100 + 15, playerCardY);
         }
 
+        for(int i = 0; i < dealer.size(); i++){
+            dealer.get(i).draw(g2d, i*100 + 15, dealerCardY);
+        }
+
         for(int i = 0; i < buttons.size(); i++){
             buttons.get(i).draw(g2d);
         }
 
-
-
-        drawBack(g2d,0, 0);
+        //drawBack(g2d,0, 0);
     }
 
     public Card drawCard(){
@@ -98,46 +102,51 @@ public class Game{
                 btnPressed = buttons.get(i).getId();
             }
         }
+        if (!playerStay) {
+        switch(btnPressed) {
+                case 1:
+                    if (playerPoints <= 21) {
+                        System.out.println("hit!");
+                        int random = (int) (Math.random() * cards.size());
+                        player.add(cards.get(random));
+                        playerPoints += cards.get(random).getValue();
+                        cards.remove(random);
+                        System.out.println("player Points updated to: " + playerPoints);
+                        if(!dealerStay) turn = "d";
 
-        switch(btnPressed){
-            case 1:
-                if(playerPoints <= 21){
-                    System.out.println("hit!");
-                    int random = (int) (Math.random()*cards.size());
-                    player.add(cards.get(random));
-                    playerPoints += cards.get(random).getValue();
-                    cards.remove(random);
-                    System.out.println("player Points updated to: " + playerPoints);
+                        dealerPlay();
+                    } else {
+                        System.out.println("player already over 21");
+                    }
+                    break;
+
+                case 2:
+                    System.out.println("stay!");
+
+                    turn = "d";
+                    playerStay = true;
+                    dealerPlay();
+                    break;
+
+                case 3:
+                    System.out.println("double!");
+
                     turn = "d";
                     dealerPlay();
-                }else{
-                    System.out.println("player already over 21");
-                }
-                break;
+                    break;
 
-            case 2:
-                System.out.println("stay!");
+                case 4:
+                    System.out.println("split!");
+                    //implent later
 
-                turn = "d";
-                dealerPlay();
-                break;
+                    break;
 
-            case 3:
-                System.out.println("double!");
-
-                turn = "d";
-                dealerPlay();
-                break;
-
-            case 4:
-                System.out.println("split!");
-                //implent later
-
-
-                break;
-            default:
-                System.out.println("invalid btnId parsed");
-                break;
+                default:
+                    System.out.println("invalid btnId parsed");
+                    break;
+            }
+        }else{
+            System.out.println("you cannot make a move anymore");
         }
     }
 
@@ -156,10 +165,30 @@ public class Game{
         dealer.add(cards.get(random));
         dealerPoints += cards.get(random).getValue();
         cards.remove(random);
-        turn = "p1";
+        System.out.println("dealer hit!");
+        if(!playerStay) turn = "p1";
+
     }
 
     public void dealerStay(){
+        System.out.println("dealer stay!");
+    }
+
+    public void checkWin(){
+        if(playerStay && dealerStay){
+            if(dealerPoints > 21 && playerPoints <= 21){
+                winner = "player";
+            }else if(dealerPoints <= 21 && playerPoints <= 21 && playerPoints > dealerPoints){
+                winner = "player";
+            }else if(dealerPoints <= 21 && playerPoints <= 21 && playerPoints < dealerPoints){
+                winner = "dealer";
+            }else if(dealerPoints == playerPoints || dealerPoints > 21 && playerPoints > 21){
+                winner = "draw";
+            }
+        }
+
 
     }
+
+
 }
