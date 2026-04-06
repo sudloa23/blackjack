@@ -17,7 +17,8 @@ public class Game{
     private int boxSize = 10;
     private List<Button> buttons = new ArrayList<>();
     private String[] btnText = {"hit", "stay", "double", "split"};
-    private int playerPoints = 0, botPoints = 0;
+    private int playerPoints = 0, dealerPoints = 0;
+    private String turn = "p1";
 
     public Game(){
         for(int i = 0; i < symbols.length; i++){
@@ -34,11 +35,11 @@ public class Game{
             player.add(drawCard());
             playerPoints += player.get(i).getValue();
             dealer.add(drawCard());
-            botPoints += dealer.get(i).getValue();
+            dealerPoints += dealer.get(i).getValue();
         }
 
         System.out.println("player Points: " + playerPoints);
-        System.out.println("bot Points: " + botPoints);
+        System.out.println("bot Points: " + dealerPoints);
 
         for(int i = 1; i <= 4; i++){
             buttons.add(new Button(650, ((i-1)*55) +10, btnText[i-1], i));
@@ -107,6 +108,8 @@ public class Game{
                     playerPoints += cards.get(random).getValue();
                     cards.remove(random);
                     System.out.println("player Points updated to: " + playerPoints);
+                    turn = "d";
+                    dealerPlay();
                 }else{
                     System.out.println("player already over 21");
                 }
@@ -115,16 +118,22 @@ public class Game{
             case 2:
                 System.out.println("stay!");
 
+                turn = "d";
+                dealerPlay();
                 break;
 
             case 3:
                 System.out.println("double!");
 
+                turn = "d";
+                dealerPlay();
                 break;
 
             case 4:
                 System.out.println("split!");
                 //implent later
+
+
                 break;
             default:
                 System.out.println("invalid btnId parsed");
@@ -133,6 +142,24 @@ public class Game{
     }
 
     public void dealerPlay(){
+        if(turn == "d"){
+            if(dealerPoints <= 16){
+                dealerHit();
+            }else{
+                dealerStay();
+            }
+        }
+    }
+
+    public void dealerHit(){
+        int random = (int) (Math.random()*cards.size());
+        dealer.add(cards.get(random));
+        dealerPoints += cards.get(random).getValue();
+        cards.remove(random);
+        turn = "p1";
+    }
+
+    public void dealerStay(){
 
     }
 }
