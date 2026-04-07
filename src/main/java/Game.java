@@ -22,6 +22,7 @@ public class Game{
     private boolean playerStay = false, dealerStay = false;
     private String winner;
     private int bet = 0;
+    private long money = 5000;
 
     public Game(){
         for(int i = 0; i < symbols.length; i++){
@@ -42,7 +43,7 @@ public class Game{
         }
 
         System.out.println("player Points: " + playerPoints);
-        System.out.println("bot Points: " + dealerPoints);
+        System.out.println("dealer Points: " + dealerPoints);
 
         for(int i = 1; i <= 4; i++){
             buttons.add(new Button(650, ((i-1)*55) +10, btnText[i-1], i));
@@ -192,8 +193,16 @@ public class Game{
     }
 
     public void result(){
-        if(winner == "player"){
-
+        if(winner != null){
+            if(winner.equals("player")){
+                System.out.println("player wins " + bet*2 + "€");
+                money += bet*2;
+            }else if(winner.equals("dealer")){
+                System.out.println("dealer wins");
+            }else if(winner.equals("draw")){
+                System.out.println("draw");
+                money += bet;
+            }
         }
     }
 }
