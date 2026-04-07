@@ -21,6 +21,7 @@ public class Game{
     private String turn = "p1";
     private boolean playerStay = false, dealerStay = false;
     private String winner;
+    private int bet = 0;
 
     public Game(){
         for(int i = 0; i < symbols.length; i++){
@@ -190,5 +191,9 @@ public class Game{
 
     }
 
+    public void result(){
+        if(winner == "player"){
 
+        }
+    }
 }
