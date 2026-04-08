@@ -41,7 +41,7 @@ public class Game{
             playerPoints += player.get(i).getValue();
             dealer.add(drawCard());
             dealerPoints += dealer.get(i).getValue();
-            bf = new BettingField(200, 200);
+            bf = new BettingField(630, 310);
         }
 
         System.out.println("player Points: " + playerPoints);
@@ -110,10 +110,13 @@ public class Game{
                 btnPressed = buttons.get(i).getId();
             }
         }
-        if (!playerStay) {
+
+        bf.handleClick(e);
+        if (!playerStay && playerPoints <= 21) {
+
         switch(btnPressed) {
                 case 1:
-                    if (playerPoints <= 21) {
+
                         System.out.println("hit!");
                         int random = (int) (Math.random() * cards.size());
                         player.add(cards.get(random));
@@ -123,9 +126,6 @@ public class Game{
                         if(!dealerStay) turn = "d";
 
                         dealerPlay();
-                    } else {
-                        System.out.println("player already over 21");
-                    }
                     break;
 
                 case 2:
@@ -133,6 +133,7 @@ public class Game{
 
                     turn = "d";
                     playerStay = true;
+                    checkWin();
                     dealerPlay();
                     break;
 
@@ -155,6 +156,10 @@ public class Game{
             }
         }else{
             System.out.println("you cannot make a move anymore");
+            turn = "d";
+            dealerPlay();
+            playerStay = true;
+            checkWin();
         }
     }
 
@@ -174,24 +179,35 @@ public class Game{
         dealerPoints += cards.get(random).getValue();
         cards.remove(random);
         System.out.println("dealer hit!");
-        if(!playerStay) turn = "p1";
+        if(!playerStay){
+            turn = "p1";
+        }else{
+            dealerPlay();
+        }
 
     }
 
     public void dealerStay(){
         System.out.println("dealer stay!");
+        dealerStay = true;
+        checkWin();
     }
 
     public void checkWin(){
+        System.out.println("checking win player: " + playerStay + " dealer: " + dealerStay);
         if(playerStay && dealerStay){
             if(dealerPoints > 21 && playerPoints <= 21){
                 winner = "player";
+                result();
             }else if(dealerPoints <= 21 && playerPoints <= 21 && playerPoints > dealerPoints){
                 winner = "player";
+                result();
             }else if(dealerPoints <= 21 && playerPoints <= 21 && playerPoints < dealerPoints){
                 winner = "dealer";
+                result();
             }else if(dealerPoints == playerPoints || dealerPoints > 21 && playerPoints > 21){
                 winner = "draw";
+                result();
             }
         }
 

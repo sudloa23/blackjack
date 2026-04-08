@@ -1,4 +1,5 @@
 import java.awt.*;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,6 +8,9 @@ public class BettingField{
     private List<Button> buttons = new ArrayList<>();
     private String[] temp = {"⌃", "⌄", "bet"};
     private long amount = 0;
+    private int pressed;
+    private long endAmount;
+    private boolean ready = false;
 
     public BettingField(int x, int y){
         width = 150;
@@ -28,7 +32,39 @@ public class BettingField{
         }
 
         g2d.drawString(String.valueOf(amount), x + width/2, y+height/2);
+    }
 
+    public void handleClick(MouseEvent e){
+        for(int i = 0; i < buttons.size(); i++){
+            if(buttons.get(i).pressed(e)){
+                pressed = buttons.get(i).getId();
+                return;
+            }
+        }
 
+        switch(pressed){
+            case 0:
+                System.out.println("raise bet by 50");
+                amount+=50;
+                break;
+
+            case 1:
+                if(amount >= 50){
+                    System.out.println("lower bet by 50");
+                    amount-= 50;
+                }else{
+                    System.out.println("to low to lower");
+                }
+                break;
+
+            case 2:
+                endAmount = amount;
+                ready = true;
+                break;
+
+            default:
+
+                break;
+        }
     }
 }
