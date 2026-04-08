@@ -19,10 +19,11 @@ public class Game{
     private String[] btnText = {"hit", "stay", "double", "split"};
     private int playerPoints = 0, dealerPoints = 0;
     private String turn = "p1";
-    private boolean playerStay = false, dealerStay = false;
+    private boolean playerStay = false, dealerStay = false, didBet;
     private String winner;
     private int bet = 0;
     private long money = 5000;
+    private BettingField bf;
 
     public Game(){
         for(int i = 0; i < symbols.length; i++){
@@ -40,13 +41,14 @@ public class Game{
             playerPoints += player.get(i).getValue();
             dealer.add(drawCard());
             dealerPoints += dealer.get(i).getValue();
+            bf = new BettingField(200, 200);
         }
 
         System.out.println("player Points: " + playerPoints);
         System.out.println("dealer Points: " + dealerPoints);
 
         for(int i = 1; i <= 4; i++){
-            buttons.add(new Button(650, ((i-1)*55) +10, btnText[i-1], i));
+            buttons.add(new Button(650, ((i-1)*55) +10, btnText[i-1], i, 100, 50));
         }
     }
 
@@ -61,6 +63,10 @@ public class Game{
 
         for(int i = 0; i < buttons.size(); i++){
             buttons.get(i).draw(g2d);
+        }
+
+        if(!didBet){
+            bf.draw(g2d);
         }
 
         //drawBack(g2d,0, 0);
@@ -144,7 +150,7 @@ public class Game{
                     break;
 
                 default:
-                    System.out.println("invalid btnId parsed");
+                    System.out.println("invalid btnId parsed - Game switch default");
                     break;
             }
         }else{
@@ -205,4 +211,9 @@ public class Game{
             }
         }
     }
+
+    public void setDidBet(boolean bool){
+        didBet = bool;
+    }
+
 }

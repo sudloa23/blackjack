@@ -6,13 +6,13 @@ public class Button{
     private String text;
     private int id;
 
-    public Button(int x, int y, String text, int id){
+    public Button(int x, int y, String text, int id, int width, int height){
         this.x = x;
         this.y = y;
         this.text = text;
         this.id = id;
-        width = 100;
-        height = 50;
+        this.width = width;
+        this.height = height;
     }
 
     public boolean pressed(MouseEvent e){
@@ -24,7 +24,7 @@ public class Button{
 
     public void draw(Graphics2D g2d){
         g2d.drawRect(x,y,width,height);
-        g2d.drawString(text, x+35 - text.length(), y+30);
+        g2d.drawString(text, x+(width/2)-5 - text.length(), y+(height/2)+5);
     }
 
     public int getId(){
